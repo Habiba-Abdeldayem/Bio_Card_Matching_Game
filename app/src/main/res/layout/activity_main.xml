@@ -25,4 +25,12 @@
         android:horizontalSpacing="8dp"
         android:verticalSpacing="8dp" />
 
+
+<Button
+    android:id="@+id/pop"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="popup"
+    android:layout_gravity="center"
+/>
 </LinearLayout>

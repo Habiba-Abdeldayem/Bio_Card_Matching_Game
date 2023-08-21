@@ -1,10 +1,12 @@
 package com.example.biomatchinggame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private GridView gridView;
     private CardAdapter adapter;
     private int score = 0;
+    Button pop;
 
     private int gridSize = 3;
     private List<Card> cards = generateCards(gridSize);
@@ -32,10 +35,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        pop = (Button) findViewById(R.id.pop);
         gridView = findViewById(R.id.gridView);
         adapter = new CardAdapter(this, cards);
         gridView.setAdapter(adapter);
 
+
+        pop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),PopupCard.class);
+                startActivity(i);
+            }
+        });
+
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent ii = new Intent(getApplicationContext(),PopupCard.class);
+                startActivity(ii);
+                return false;
+            }
+        });
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,13 +95,13 @@ public class MainActivity extends AppCompatActivity {
             clickedCard.flip();
             adapter.notifyDataSetChanged();
 
-            final ImageView imageView = adapter.getImageResourceId(position);
+            final ImageView imageView = adapter.getImageViewForCard(position);
 
-            imageView.animate().scaleX(2f).scaleY(2f).alpha(0f).setDuration(1000).withEndAction(new Runnable() {
+            imageView.animate().scaleX(2f).scaleY(2f).alpha(0f).setDuration(5000).withEndAction(new Runnable() {
                 @Override
                 public void run() {
-                    imageView.setScaleX(1f);
-                    imageView.setScaleY(1f);
+                    imageView.setScaleX(2f);
+                    imageView.setScaleY(2f);
                     imageView.setAlpha(1f);
                     // Continue with your existing logic here
                     // ...

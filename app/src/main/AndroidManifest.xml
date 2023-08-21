@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BioMatchingGame">
         <activity
+            android:name=".PopupCard"
+            android:exported="false"
+            android:theme="@style/Theme.BioMatchingGame.PopMe"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

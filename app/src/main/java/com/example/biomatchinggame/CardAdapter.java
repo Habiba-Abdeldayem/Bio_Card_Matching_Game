@@ -6,12 +6,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CardAdapter extends BaseAdapter {
 
     private Context context;
     private List<Card> cards;
+    private Map<Integer, ImageView> imageViewMap = new HashMap<>(); // Keep track of ImageView instances
+
 
     public CardAdapter(Context context, List<Card> cards) {
         this.context = context;
@@ -50,7 +54,13 @@ public class CardAdapter extends BaseAdapter {
         } else {
             imageView.setImageResource(R.drawable.qmark);
         }
-
+        // Store the ImageView instance in the map
+        imageViewMap.put(position, imageView);
         return imageView;
+    }
+
+    // Get the ImageView associated with a specific card position
+    public ImageView getImageViewForCard(int position) {
+        return imageViewMap.get(position);
     }
 }
