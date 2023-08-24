@@ -2,27 +2,23 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
     android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp">
-
+    <ImageView
+        android:id="@+id/questionExplainImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
     <ImageView
-        android:id="@+id/questionTermImageView"
+        android:id="@+id/explainImgView"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/card_back" />
-
-    <TextView
-        android:id="@+id/termTextView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        />
-
 
 </androidx.cardview.widget.CardView>

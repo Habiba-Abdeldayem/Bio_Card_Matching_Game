@@ -7,30 +7,29 @@
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".MainActivity">
-<TextView
-    android:id="@+id/scoreTextView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="🔥Score:"
-    android:textSize="50dp"
-    android:layout_margin="50dp"/>
 
-    <GridView
-        android:id="@+id/gridView"
+    <TextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🔥Score:"
+        android:textSize="32dp"
+        android:layout_margin="16dp" />
+
+    <!-- RecyclerView replaces GridView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:numColumns="3"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:horizontalSpacing="8dp"
         android:verticalSpacing="8dp" />
 
-
-<Button
-    android:id="@+id/pop"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="popup"
-    android:layout_gravity="center"
-/>
+    <Button
+        android:id="@+id/pop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="popup"
+        android:layout_gravity="center" />
 </LinearLayout>

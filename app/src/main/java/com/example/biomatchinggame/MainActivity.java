@@ -12,14 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private GridView gridView;
-    private CardAdapter adapter;
+    RecyclerView recyclerView;
+    private CardAdapter cardAdapter;
     private int score = 0;
     Button pop;
 
@@ -36,9 +39,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         pop = (Button) findViewById(R.id.pop);
-        gridView = findViewById(R.id.gridView);
-        adapter = new CardAdapter(this, cards);
-        gridView.setAdapter(adapter);
+        recyclerView = findViewById(R.id.recyclerView);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3); // Use the appropriate number of columns
+        recyclerView.setLayoutManager(layoutManager);
+
+        cardAdapter = new CardAdapter(this, cards);
+        recyclerView.setAdapter(cardAdapter);
 
 
         pop.setOnClickListener(new View.OnClickListener() {
@@ -49,26 +55,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent ii = new Intent(getApplicationContext(),PopupCard.class);
-                startActivity(ii);
-                return false;
-            }
-        });
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedCard = cards.get(position);
-                onCardClick(position);
-            }
-        });
+
     }
 
     private List<Card> generateCards(int size) {
         List<Card> cardList = new ArrayList<>();
-        int[] imageResourceIds = {R.drawable.brain, R.drawable.brain_txt,
+        int[] imageResourceIds = {R.drawable.plant, R.drawable.heart_txt,
                 R.drawable.cell,R.drawable.cell_txt,
                 R.drawable.heart,R.drawable.heart_txt,
                 R.drawable.lungs,R.drawable.lungs_txt,
@@ -76,37 +68,29 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.heart,R.drawable.heart_txt}; // Add more IDs
         int imageIndex = 0;
         for (int i = 1; i <= size * 2; i++) {
-            cardList.add(new Card(i,imageResourceIds[imageIndex++]));
-            cardList.add(new Card(i,imageResourceIds[imageIndex]));
+            Card term_card = new Card(i,imageResourceIds[imageIndex++]);
+            term_card.setExplanation(false);
+            Card explain_card = new Card(i,imageResourceIds[imageIndex]);
+            explain_card.setExplanation(true);
+            cardList.add(term_card);
+            cardList.add(explain_card);
             imageIndex = (imageIndex + 1) % imageResourceIds.length;
         }
 //        Collections.shuffle(cardList);
         return cardList;
     }
 
-    private void onCardClick(int position) {
+    void onCardClick(int position) {
         if (!isClickable) {
             return;
         }
 
-        Card clickedCard = cards.get(position);
+        clickedCard = cards.get(position);
 
         if (!clickedCard.isFlipped()) {
             clickedCard.flip();
-            adapter.notifyDataSetChanged();
+            cardAdapter.notifyDataSetChanged();
 
-            final ImageView imageView = adapter.getImageViewForCard(position);
-
-            imageView.animate().scaleX(2f).scaleY(2f).alpha(0f).setDuration(5000).withEndAction(new Runnable() {
-                @Override
-                public void run() {
-                    imageView.setScaleX(2f);
-                    imageView.setScaleY(2f);
-                    imageView.setAlpha(1f);
-                    // Continue with your existing logic here
-                    // ...
-                }
-            }).start();
 
             if (firstFlippedCard == null) {
                 firstFlippedCard = clickedCard;
@@ -116,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     firstFlippedCard.setMatched(true);
                     clickedCard.setMatched(true);
                     isClickable = true;
-                    adapter.notifyDataSetChanged();
+                    cardAdapter.notifyDataSetChanged();
                     firstFlippedCard = null;
 
                     score += 10;
@@ -128,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             firstFlippedCard.flip();
                             clickedCard.flip();
-                            adapter.notifyDataSetChanged();
+                            cardAdapter.notifyDataSetChanged();
                             firstFlippedCard = null;
                             isClickable = true;
                         }
