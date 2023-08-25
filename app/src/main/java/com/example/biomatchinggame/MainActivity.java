@@ -1,23 +1,19 @@
 package com.example.biomatchinggame;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Button pop;
 
     private int gridSize = 3;
-    private List<Card> cards = generateCards(gridSize);
+    private List<Card> cards;
 
     private Card firstFlippedCard = null;
     private boolean isClickable = true;
@@ -37,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        cards = generateCards(gridSize);
         pop = (Button) findViewById(R.id.pop);
         recyclerView = findViewById(R.id.recyclerView);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3); // Use the appropriate number of columns
@@ -59,23 +55,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<Card> generateCards(int size) {
+
+        Resources res = getResources();
+        String[] termNames = getResources().getStringArray(R.array.term_names);
+        TypedArray termImages = getResources().obtainTypedArray(R.array.image_resource_ids);
+        int qImage = R.drawable.qmark;
+        String[] termDescriptions = getResources().getStringArray(R.array.term_descriptions);
+
         List<Card> cardList = new ArrayList<>();
-        int[] imageResourceIds = {R.drawable.plant, R.drawable.heart_txt,
-                R.drawable.cell,R.drawable.cell_txt,
-                R.drawable.heart,R.drawable.heart_txt,
-                R.drawable.lungs,R.drawable.lungs_txt,
-                R.drawable.photosy,R.drawable.plant,
-                R.drawable.heart,R.drawable.heart_txt}; // Add more IDs
-        int imageIndex = 0;
-        for (int i = 1; i <= size * 2; i++) {
-            Card term_card = new Card(i,imageResourceIds[imageIndex++]);
+//        int[] imageResourceIds = {R.drawable.pic_animal_cell, R.drawable.pic_animal_cell,
+//                R.drawable.pic_plant_cell,R.drawable.pic_plant_cell,
+//                R.drawable.pic_cell_wall,R.drawable.pic_cell_wall,
+//                R.drawable.pic_cell_membrane,R.drawable.pic_cell_membrane,
+//                R.drawable.pic_chloroplasts,R.drawable.pic_chloroplasts,
+//                R.drawable.pic_sap_vacuole,R.drawable.pic_sap_vacuole}; // Add more IDs
+//        int imageIndex = 0;
+        for (int i = 0; i < size * 2; i++) {
+            String termName = termNames[i];
+            int imageResourceId = termImages.getResourceId(i, -1);
+            String description = i < termDescriptions.length ? termDescriptions[i] : "";
+
+            // Term Card
+            Card term_card = new Card(i, termName, qImage,"");
             term_card.setExplanation(false);
-            Card explain_card = new Card(i,imageResourceIds[imageIndex]);
+
+            // Explain card
+            Card explain_card = new Card(i, "", imageResourceId,description);
             explain_card.setExplanation(true);
+
             cardList.add(term_card);
             cardList.add(explain_card);
-            imageIndex = (imageIndex + 1) % imageResourceIds.length;
+
         }
+        termImages.recycle(); // Don't forget to recycle the TypedArray
+
 //        Collections.shuffle(cardList);
         return cardList;
     }

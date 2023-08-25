@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bio Matching Game</string>
+    <string name="test">test</string>
 </resources>

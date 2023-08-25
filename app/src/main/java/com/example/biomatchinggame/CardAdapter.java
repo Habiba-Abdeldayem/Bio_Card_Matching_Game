@@ -2,6 +2,7 @@ package com.example.biomatchinggame;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,11 +65,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             if (card.isFlipped() || card.isMatched()) {
                 qExplainImgView.setVisibility(View.GONE);
                 holder.explainImageView.setVisibility(View.VISIBLE);
+
                 holder.explainImageView.setImageResource(card.getImageResourceId());
+
 
             } else{
                 qExplainImgView.setVisibility(View.VISIBLE);
                 holder.explainImageView.setVisibility(View.GONE);
+
                 qExplainImgView.setImageResource(R.drawable.qmark);
             }
 
@@ -79,10 +83,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         else {
             if (!(card.isExplanation())) {
                 if (card.isFlipped() || card.isMatched()) {
-//                holder.termTextView.setText(card.getText());
+                    holder.termTextView.setText(card.getTerm());
                     holder.termTextView.setVisibility(View.VISIBLE);
 
-                    holder.termTextView.setText("Term");
                     qTermImgView.setVisibility(View.GONE);
 
 
@@ -101,6 +104,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             @Override
             public boolean onLongClick(View v) {
                 Intent ii = new Intent(context,PopupCard.class);
+                // Create a Bundle to hold the data
+                Bundle bundle = new Bundle();
+
+                bundle.putString("term", card.getTerm());
+                bundle.putInt("img", card.getImageResourceId());
+                bundle.putString("desc", card.getDescription());
+                bundle.putBoolean("isExplain", card.isExplanation());
+
+                ii.putExtras(bundle);
                 v.getContext().startActivity(ii);
                 return false;
             }

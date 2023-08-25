@@ -6,16 +6,20 @@ public class Card {
     private boolean flipped;
     private int imageResourceId;
     private boolean matched;
-    private String text;
+    private String term;
+    private String description;
+
 
     private boolean isExplanation;
 
 
-    public Card(int id, int imageResourceId) {
+    public Card(int id, String term, int imageResourceId, String description) {
         this.id = id;
         this.imageResourceId = imageResourceId;
         this.flipped = false;
         this.matched = false;
+        this.term = term;
+        this.description = description;
     }
 
     public boolean isExplanation() {
@@ -49,11 +53,19 @@ public class Card {
         this.matched = matched;
     }
 
-    public String getText() {
-        return text;
+    public String getTerm() {
+        return term;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

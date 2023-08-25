@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <string-array name="term_names">
+        <item>Animal cell</item>
+        <item>plant cell</item>
+        <item>Cell wall</item>
+        <item>Cell membrane</item>
+        <item>Sap vacuole</item>
+        <item>Osmosis</item>
+        <!-- Add more terms here -->
+    </string-array>
+
+    <array name="image_resource_ids">
+        <item>@drawable/pic_animal_cell</item>
+        <item>@drawable/pic_plant_cell</item>
+        <item>@drawable/pic_cell_wall</item>
+        <item>@drawable/pic_cell_membrane</item>
+        <item>@drawable/pic_chloroplasts</item>
+        <item>@drawable/pic_sap_vacuole</item>
+        <!-- Add more image resource IDs here -->
+    </array>
+
+    <string-array name="term_descriptions">
+        <item>.</item>
+        <item>.</item>
+        <item>a rigid, external layer that is specifically designed to provide structural support.</item>
+        <item>is found in all cells and separates the interior of the cell from the outside environment, it consists of a lipid bilayer that is semipermeable.</item>
+        <item>A type of plastids are sites of photosynthesis, converting sunlight into energy for growth.</item>
+        <item>Tiny cell sacs hold water and molecules, support the cell, and maintain its Turgor pressure.</item>
+        <!-- Add more descriptions here -->
+    </string-array>
+
+
+
+
+</resources>
